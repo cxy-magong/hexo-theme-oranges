@@ -108,14 +108,13 @@
             <% if(page.next) { %>
               <a href="<%- url_for(page.next.path) %>" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
-                <span><%= __('prev') %></span>
+                <span><%- page.next.title %></span>
               </a>
             <% } %>
           </div>
           <div class="post-attach">
             <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="<%= __('updateTime') %>"></i>
-              <%- page.updated.format("YYYY-MM-DD HH:mm:ss") %>
+              <a href="/">返回主页</a>
             </span>
             <% for(item of theme.navbar) {
               if (item.key === 'tags' && item.enable) {
@@ -151,7 +150,7 @@
           <div class="post-foot-prev">
             <% if(page.prev) { %>
               <a href="<%- url_for(page.prev.path) %>" target="_self">
-                <span><%= __('next') %></span>
+                <span><%- page.prev.title %></span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
             <% } %>

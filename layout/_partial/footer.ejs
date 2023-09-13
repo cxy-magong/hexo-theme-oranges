@@ -15,7 +15,9 @@
       <% for(let item of theme.footer.social){ %>
         <li>
           <a title="<%- item.name %>" href="<%- item.path %>">
-            <i class="iconfont icon-<%- item.icon %>"></i>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-<%- item.icon %>"></use>
+            </svg>
           </a>
         </li>
       <% } %>
