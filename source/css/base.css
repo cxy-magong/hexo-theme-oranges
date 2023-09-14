@@ -228,6 +228,12 @@ a:hover {
   color: var(--color-text-a);
   padding-top: 10px;
 }
+.avatar .describe {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-a);
+  padding-top: 10px;
+}
 
 .content {
   clear: both;

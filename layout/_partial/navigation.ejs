@@ -9,6 +9,10 @@
       <% } %>
     </a>
     <div class="nickname"><a href="<%- theme.avatar.path %>"><%- theme.avatar.author_nickname %></a></div>
+      <% if (theme.avatar.describe){%>
+        <p  class="describe"><%- theme.avatar.describe %></p>
+      <% }%>
+    
   </div>
   <div class="navbar">
     <ul>
