@@ -159,7 +159,7 @@ a:hover {
     height: unset!important;
   }
   .back-to-top {
-    opacity: 0;
+    opacity: 1;
     z-index: -1;
   }
 }
