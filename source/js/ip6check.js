@@ -50,14 +50,14 @@ function reloadAllVideos() {
 testHostAvailability(host1, isHost1Accessible => {
   if (isHost1Accessible) {
     console.log(`Host ${host1} is accessible`);
-    
+    fillSvg('#icon-network', '#21A3DD')
   } else {
     console.log(`${host1} not accessible, trying ${host2}`);
     
     testHostAvailability(host2, isHost2Accessible => {
       if (isHost2Accessible) {
         console.log(`${host2} is accessible`);
-        
+        fillSvg('#icon-network', null)
         // Get all elements with host1 URLs
         const elements = document.querySelectorAll('[src*="sv-v.magong.site"], [href*="sv-v.magong.site"]');
         
@@ -66,53 +66,42 @@ testHostAvailability(host1, isHost1Accessible => {
         
       } else {
         console.log('Both hosts unavailable');
+        toggleSvg('#icon-network', false)
       }
     });
   }
 });
 
-function makeSvgGray(icon) {
-  var useElement = document.querySelector(`use[xlink:href="${icon}"]`);
-  var svgElement = useElement.parentNode;
-  svgElement.setAttribute('filter', 'grayscale(100%)');
+function fillSvg(icon, color) {
+  var useElement = document.querySelector(`${icon}`);
+  console.log("useElement:" + useElement.nodeName)
+  useElement.style.fill = color;
 }
 
-
-
-// 使用函数语法而不是箭头函数 
-function changeColor() {
-  // 在这里获取svgEl
-  const svgEl = document.querySelector('.icon.svg-icon');
-
-  svgEl.style.fill = '#00ff00';
+function toggleSvg(icon, display) {
+  var useElement = document.querySelector(`${icon}`);
+  if (display) {
+    useElement.style.display = "block";
+  } else {
+    useElement.style.display = "none";
+  }
 }
 
-// 选择一个确定会提前加载的父元素
-const parentEl = document.getElementById('parent'); 
-
-// 绑定到这个父元素的load事件上 
-parentEl.addEventListener('load', changeColor);
+function test(){
+  var iconElement = document.querySelector('#icon-network');
+  iconElement.addEventListener('mouseover', function() {
+    fillSvg('#icon-network', null);
+    console.log('mouse here')
+  });
+  iconElement.addEventListener('mouseout', function() {
+    fillSvg('#icon-network', "green");
+    console.log('mouse out')
+  });
+    fillSvg('#icon-network', null)
+}
 
 window.onload = () => {
-
-  
+  // test()
+  // toggleSvg('#icon-network', true)
+  // toggleSvg('#icon-network', false)
 }
-// window.addEventListener('error', function(event) {
-//   if (event.target.src.includes('sv-v.magong.site')) {
-//     replaceToCf(event.target);
-//   }
-// }, true);
-
-// async function main() {
-//     const hasIPv6 = await checkIPv6();
-    
-//     const elements = document.querySelectorAll('.ip6');
-    
-//     if (hasIPv6) {
-//       elements.forEach(el => el.style.display = ''); 
-//     } else {
-//       elements.forEach(el => el.style.display = 'none');
-//     }
-//   }
-  
-// main();
