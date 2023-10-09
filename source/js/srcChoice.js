@@ -3,6 +3,7 @@
 // 定义 JSON 数据的 URL
 const nat_url = "https://sv-v-cf.magong.site/dat/nat/sv-v.json";
 
+host_cdn = 'http://s3.cdn.sv-v.magong.site'
 host_ip6 = 'https://sv-v.magong.site'
 host_ip4 = 'http://117.140.128.135:37862'
 host_cf = 'https://sv-v-cf.magong.site/'
@@ -52,6 +53,8 @@ function networkIcon(state){
   if (state == 'ipv6'){
     // 显示原本的图标颜色（淡蓝）
     fillSvg('#icon-network', '#21A3DD')
+  }else if (state == 'cdn'){
+    fillSvg('#icon-network', '#F6821F');
   }else if (state == 'ipv4'){
     fillSvg('#icon-network', '#C0A000');
   }else if (state == 'cf'){
@@ -82,12 +85,18 @@ async function accessAll(urls){
       networkIcon('ipv6')
     }
     else if (results[1]){
+      console.log('cdn network')
+      replaceDomain(host_ip6, host_cdn)
+      networkIcon('cdn')
+      reloadAllVideos()
+    }
+    else if (results[2]){
       console.log('ipv4 network')
       replaceDomain(host_ip6, host_ip4)
       networkIcon('ipv4')
       reloadAllVideos()
     }
-    else if (results[2]){
+    else if (results[3]){
       console.log('cf network')
       replaceDomain(host_ip6, host_cf)
       networkIcon('cf')
@@ -158,7 +167,7 @@ function createFetch(timeout) {
 }
 
 // 使用 createFetch 创建一个新的 fetch 函数，并发出请求
-createFetch(3000)(nat_url)
+createFetch(1000)(nat_url)
   .then(response => {
     if (!response.ok) {
       throw new Error(`请求失败，状态码: ${response.status}`);
@@ -169,6 +178,7 @@ createFetch(3000)(nat_url)
     // console.log('80 port adress:',sv_v_nat['80']);
     host_ip4 = 'http://' + sv_v_nat['80']
     const urls = [
+      host_cdn,
       host_ip6,
       host_ip4,
       host_cf,
